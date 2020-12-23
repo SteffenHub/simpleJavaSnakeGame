@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 public class Field {
     
     JFrame fenster;
+    SpielFeld spielFeld;
 
     public Field(){
 
@@ -16,6 +17,9 @@ public class Field {
         fenster.setTitle("Snake");
         //fenster schliessen wenn X gedrueckt wird
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //spielfeld erzeugen
+        spielFeld = new SpielFeld(10, 15);
 
     }
 

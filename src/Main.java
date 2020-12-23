@@ -2,6 +2,6 @@ public class Main {
     
     public static void main(String[] args){
 
-        Field spielFeld = new Field();
+        Field fenster = new Field();
     }
 }
