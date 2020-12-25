@@ -27,9 +27,9 @@ public class Field extends Thread{
         fenster.setLocationRelativeTo(null);
 
         //spielfeld erzeugen
-        spielFeld = new SpielFeld(10, 15);
+        spielFeld = new SpielFeld(20, 20);
         //JPanel erzeugen
-        panel = new Panel(spielFeld.getHoehe(),spielFeld.getBreite(),fenster.getSize());
+        panel = new Panel(spielFeld.getHoehe(),spielFeld.getBreite(),fenster.getSize(),spielFeld.getEssenPos(),spielFeld.getSnakePos());
         //Panel dem Fenster hinzufuegen
         fenster.add(panel);
         //run();
@@ -43,7 +43,6 @@ public class Field extends Thread{
         while(true){
             panel.repaint();
             fenster.repaint();
-
             /*
             try {
 				Thread.sleep(40);

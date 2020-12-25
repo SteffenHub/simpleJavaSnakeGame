@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Dimension;
 
@@ -10,7 +11,9 @@ public class SpielFeld {
     //anzahl an Feldern vertikal
     private final int breite;
     //die position des Essens
-    Dimension essenPos;
+    private Position essenPos;
+    //Speichert alle positionen auf der die Snake gerade ist
+    private ArrayList<Position> snakePos;
 
     /**
      * Konstruktor des Spielfeldes
@@ -30,6 +33,14 @@ public class SpielFeld {
                 spielFeld[x][y] = 0;
             } 
         }
+        //Liste fuer die Snake erstellen und erste Postition festlegen
+        snakePos = new ArrayList<>();
+        spielFeld[1][1] = 1;
+        snakePos.add(new Position(1,1));
+        spielFeld[1][2] = 1;
+        snakePos.add(new Position(1,2));
+        spielFeld[1][3] = 1;
+        snakePos.add(new Position(1,3));
         //zufaellige Pos fuer Essen suchen und in 2-Dim-Array einsetzen
         EssenRandomPlazieren();
         //Das aktuelle Feld in der Konsolle ausgeben
@@ -74,14 +85,14 @@ public class SpielFeld {
                 posGefunden = true;
                 //diese zufaellige position mit essen(2) fuellen
                 spielFeld[y][x] = 2;
-                essenPos = new Dimension(y,x);
+                essenPos = new Position(y,x);
             }
         }
     }
 
     /**
      * getter fuer breite
-     * @return anzahl an Feldern vertikal
+     * @return itn breite, anzahl an Feldern vertikal
      */
     public int getBreite(){
         return this.breite;
@@ -90,7 +101,7 @@ public class SpielFeld {
 
     /**
      * getter fuer hoehe
-     * @return anzahl an Feldern horizontal
+     * @return itn hoehe, anzahl an Feldern horizontal
      */
     public int getHoehe(){
         return this.hoehe;
@@ -98,7 +109,7 @@ public class SpielFeld {
 
     /**
      * getter fuer das Spielfeld
-     * @return aktuellen Zustand als 2-Dim-int-Array
+     * @return int[][] spielFeld, aktuellen Zustand als 2-Dim-int-Array
      */
     public int[][] getSpielFeld(){
         return this.spielFeld;
@@ -106,10 +117,18 @@ public class SpielFeld {
 
     /**
      * getter fuer position des essens
-     * @return die position des essens als Dimension
+     * @return Position essenPos, die position des essens als Dimension
      */
-    public Dimension getEssenPos(){
+    public Position getEssenPos(){
         return this.essenPos;
     }
 
+    /**
+     * getter fuer Liste alle Positionen an der die Snake sich gerade befindet
+     * 
+     * @return ArrayList<Position>
+     */
+    public ArrayList<Position> getSnakePos(){
+        return this.snakePos;
+    }
 }
