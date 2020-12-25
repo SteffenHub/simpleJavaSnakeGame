@@ -45,6 +45,10 @@ public class Kontroller implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
             field.getSpielFeld().setRichtung(-2);
         }
+        //Pause
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            this.field.startStop();
+        }
     }
 
     /**
