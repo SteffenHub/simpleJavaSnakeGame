@@ -88,12 +88,17 @@ public class Panel extends JPanel {
 
     private void drawSnake(Graphics g){
         g.setColor(Color.GREEN);
-        for(int i = 0; i < snakePos.size(); i++){
+        for(int i = 0; i < snakePos.size()-1; i++){
             g.fillRect((snakePos.get(i).getY() * abstandVertikal) +seitenPlatz+3,
                         (snakePos.get(i).getX() * abstandHorizontal) +seitenPlatz+3,
                         fensterBreite / gridBreite -7,
                         fensterHoehe/ gridHoehe -7);
         }
+        g.setColor(Color.MAGENTA);
+        g.fillRect(snakePos.get(snakePos.size()-1).getY()*abstandVertikal+seitenPlatz+3,
+                    snakePos.get(snakePos.size()-1).getX()*abstandHorizontal+seitenPlatz+3,
+                    fensterBreite / gridBreite -7,
+                    fensterHoehe/ gridHoehe -7);
     }
 
     /**
