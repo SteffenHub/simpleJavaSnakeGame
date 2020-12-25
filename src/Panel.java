@@ -5,18 +5,20 @@ import javax.swing.*;
 
 public class Panel extends JPanel {
 
-    //anzahl Raster Horizontal
-    int gridHoehe;
+    //ieine serien nummer
+    private static final long serialVersionUID = 6503846234122328453L;
+    // anzahl Raster Horizontal
+    private int gridHoehe;
     //anzahl Raster Vertikal
-    int gridBreite;
+    private int gridBreite;
     //aktuelle hoehe des Fensters
-    int fensterHoehe;
+    private int fensterHoehe;
     //aktuelle Breite des Fensters
-    int fensterBreite;
+    private int fensterBreite;
     //dies position des Essens
-    Position essenPos;
+    private Position essenPos;
     //positionen der Snake
-    ArrayList<Position> snakePos;
+    private ArrayList<Position> snakePos;
 
     /**
      * Konstruktor des Panels
@@ -44,6 +46,10 @@ public class Panel extends JPanel {
         drawEat(g);
         // die Snake zeichnen
         drawSnake(g);
+
+        //sowas wie repaint
+        //revalidate();
+        repaint();
     }
 
     /**
@@ -65,7 +71,6 @@ public class Panel extends JPanel {
     }
 
     private void drawEat(Graphics g){
-
         int abstandVertikal = fensterBreite / gridBreite;
         int abstandHorizontal = fensterHoehe/ gridHoehe;
 
@@ -75,8 +80,20 @@ public class Panel extends JPanel {
         fensterBreite / gridBreite -3, fensterHoehe/ gridHoehe -3);
     }
 
+    public void drawEat(Position essenPos){
+        this.essenPos = essenPos;
+        int abstandVertikal = fensterBreite / gridBreite;
+        int abstandHorizontal = fensterHoehe/ gridHoehe;
+
+        this.getGraphics().setColor(Color.RED);
+
+        this.getGraphics().fillRect(essenPos.getY() * abstandVertikal +2, essenPos.getX() *abstandHorizontal +2,
+        fensterBreite / gridBreite -3, fensterHoehe/ gridHoehe -3);
+    }
+
     private void drawSnake(Graphics g){
         g.setColor(Color.GREEN);
+
         int abstandVertikal = fensterBreite / gridBreite;
         int abstandHorizontal = fensterHoehe/ gridHoehe;
 
@@ -84,10 +101,6 @@ public class Panel extends JPanel {
 
             g.fillRect(snakePos.get(i).getY() * abstandVertikal +2, snakePos.get(i).getX() * abstandHorizontal +2,
             fensterBreite / gridBreite -3, fensterHoehe/ gridHoehe -3);
-
         }
-
     }
-
-
 }

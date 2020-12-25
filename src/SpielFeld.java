@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.awt.Dimension;
 
 public class SpielFeld {
     
@@ -14,6 +13,9 @@ public class SpielFeld {
     private Position essenPos;
     //Speichert alle positionen auf der die Snake gerade ist
     private ArrayList<Position> snakePos;
+    //die richtung in der die Snake laueft 
+    //1=rechts,2=oben,-1=links,-2=unten | static,weil keyListener static ist
+    private int richtung;
 
     /**
      * Konstruktor des Spielfeldes
@@ -46,6 +48,8 @@ public class SpielFeld {
         //Das aktuelle Feld in der Konsolle ausgeben
         FeldInKonsolleAusgeben();
 
+        //beim starten nach rechts gehen
+        this.richtung = 1;
     }
 
     /**
@@ -85,8 +89,52 @@ public class SpielFeld {
                 posGefunden = true;
                 //diese zufaellige position mit essen(2) fuellen
                 spielFeld[y][x] = 2;
-                essenPos = new Position(y,x);
+                this.essenPos = new Position(y,x);
             }
+        }
+    }
+
+    /**
+     * ermittelt das neue Feld vom Kopf der Snake
+     * und prueft ob das Essen gefunden wurde
+     * 
+     * @return true wenn essen gegessen false sonst
+     */
+    public boolean nextStep(){
+
+        //aktuelle position vom snake kopf
+        int x = this.snakePos.get(snakePos.size()-1).getX();
+        int y = this.snakePos.get(snakePos.size()-1).getY();
+        Position neuePos = null;
+
+        //rechts
+        if(this.richtung == 1){
+            neuePos = new Position(x,y+1);
+        }
+        //links
+        else if(this.richtung == -1){
+            neuePos = new Position(x,y-1);
+        }
+        //oben
+        else if(this.richtung == 2){
+            neuePos = new Position(x-1,y);
+        }
+        //unten
+        else if(this.richtung == -2){
+            neuePos = new Position(x+1,y);
+        }
+        //die neue Pos vom Kopf der Snake hinzugefuegt
+        this.snakePos.add(neuePos);
+        
+        //wenn neue Pos auf das essen trifft
+        if(neuePos.getX() == essenPos.getX() && neuePos.getY() == essenPos.getY()){
+            //nicht loeschen(Snake wird ein groesser)
+            //neues Essen suchen
+            EssenRandomPlazieren();
+            return true;
+        }else{
+            this.snakePos.remove(0);
+            return false;
         }
     }
 
@@ -130,5 +178,24 @@ public class SpielFeld {
      */
     public ArrayList<Position> getSnakePos(){
         return this.snakePos;
+    }
+
+    /**
+     * getter fuer die richtung in die die Snake lauft
+     * 1=rechts,-1=links,2=oben,-2=unten
+     * 
+     * @return die richtung der Snake als Integer
+     */
+    public int getRichtung(){
+        return this.richtung;
+    }
+
+    /**
+     * setter fuer die richtung in die die Snake lauft
+     * 
+     * @param richtungNeu 
+     */
+    public void setRichtung(int richtungNeu){
+        this.richtung = richtungNeu;
     }
 }
