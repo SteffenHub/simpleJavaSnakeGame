@@ -8,7 +8,7 @@ public class Field extends Thread implements ComponentListener {
 
     //Das erzeugte Fenster
     private JFrame fenster;
-    private final int fensterBreite = 1200;
+    private final int fensterBreite = 900;
     private final int fensterHoehe = 900;
 
     // Das Spielfeld mit dem 2-Dim-Array
