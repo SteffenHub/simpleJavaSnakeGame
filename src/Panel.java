@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
@@ -20,10 +24,14 @@ public class Panel extends JPanel {
     private Position essenPos;
     // positionen der Snake
     private ArrayList<Position> snakePos;
-    //Platz an den seiten des Spielfeldes
+    // Platz an den seiten des Spielfeldes
     private final int seitenPlatz;
+    //breite der Kasten im Raster
     private int abstandVertikal;
+    //hoehe der Kaster im Raster
     private int abstandHorizontal;
+    //das Apfel bild
+    private BufferedImage appleImage;
 
     /**
      * Konstruktor des Panels
@@ -32,7 +40,8 @@ public class Panel extends JPanel {
      * @param breite         anzahl der vertikalen Striche im Grid
      * @param fensterGroesse eingeben mit fenster.getSize()
      */
-    public Panel(int hoehe, int breite, JFrame fenster, Position essenPos, ArrayList<Position> snakePos,int fensterBreite, int fensterHoehe) {
+    public Panel(int hoehe, int breite, JFrame fenster, Position essenPos, ArrayList<Position> snakePos,
+                 int fensterBreite, int fensterHoehe) {
         this.gridBreite = breite;
         this.gridHoehe = hoehe;
         this.fensterBreite = fensterBreite;
@@ -40,14 +49,21 @@ public class Panel extends JPanel {
         this.essenPos = essenPos;
         this.snakePos = snakePos;
         this.seitenPlatz = 20;
-        this.abstandVertikal = (fensterBreite-(seitenPlatz*2)) / gridBreite;
-        this.abstandHorizontal = (fensterHoehe-seitenPlatz*2)/ gridHoehe;
+        this.abstandVertikal = (fensterBreite - (seitenPlatz * 2)) / gridBreite;
+        this.abstandHorizontal = (fensterHoehe - seitenPlatz * 2) / gridHoehe;
+        // hintergrundfarbe einstellen
+        setBackground(Color.BLACK);
+        //Apfel Bild laden
+        try {
+            appleImage = ImageIO.read(ClassLoader.getSystemResource("apple.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
         // das Grid zeichnen
         drawGrid(g);
         // das Essen zeichnen
@@ -79,11 +95,20 @@ public class Panel extends JPanel {
     }
 
     private void drawEat(Graphics g){
-        g.setColor(Color.RED);
-        g.fillRect(this.essenPos.getY() * abstandVertikal +seitenPlatz+3,
-                    this.essenPos.getX() *abstandHorizontal +seitenPlatz+3,
-                    fensterBreite / gridBreite -7,
-                    fensterHoehe/ gridHoehe -7);
+        //groesse des apple berechnen
+        int groesseApple;
+        if(abstandVertikal > abstandHorizontal){
+            groesseApple = abstandHorizontal-7;
+        }else{
+            groesseApple = abstandVertikal-7;
+        }
+        //apfel zeichnen
+        g.drawImage(appleImage,
+                    (this.essenPos.getY() * abstandVertikal +seitenPlatz+1) + (abstandVertikal/2)- groesseApple/2,
+                    (this.essenPos.getX() * abstandHorizontal +seitenPlatz+2) + (abstandHorizontal/2)-groesseApple/2,
+                    groesseApple,
+                    groesseApple,
+                    null);
     }
 
     private void drawSnake(Graphics g){

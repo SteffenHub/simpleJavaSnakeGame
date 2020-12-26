@@ -23,19 +23,19 @@ public class Field extends Thread implements ComponentListener {
     private JButton startButton =null;
 
     public Field() {
-        // JComponents Konstruktor ausfueheren
+        //JComponents Konstruktor ausfueheren
         super();
-        // neues Fenster erstellen
+        //neues Fenster erstellen
         fenster = new JFrame();
-        // groesse des Fensters einstellen
+        //groesse des Fensters einstellen
         fenster.getContentPane().setPreferredSize(new Dimension(fensterBreite,fensterHoehe));
         // Fenster sichtbar machen
         fenster.setVisible(true);
-        // Namen des Fensters
+        //Namen des Fensters
         fenster.setTitle("Snake");
-        // fenster schliessen wenn X gedrueckt wird
+        //fenster schliessen wenn X gedrueckt wird
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // fenster ist in der mitte des Bildschirms
+        //fenster ist in der mitte des Bildschirms
         fenster.setLocationRelativeTo(null);
         //Component Listener fuer reaktion auf fenster groesse veraendert
         fenster.addComponentListener(this);
@@ -43,6 +43,7 @@ public class Field extends Thread implements ComponentListener {
         fenster.setResizable(false);
         //groesse des Fensters anwenden
         fenster.pack();
+        
 
         //spielfeld erzeugen
         spielFeld = new SpielFeld(20, 20);
@@ -53,25 +54,25 @@ public class Field extends Thread implements ComponentListener {
                             spielFeld.getEssenPos(),
                             spielFeld.getSnakePos(),
                             this.fensterBreite,this.fensterHoehe);
-
+        
         // kontroller erstellen fuer keyListener
         this.kontroller = new Kontroller(this);
 
         //startButton Initialisieren
         //initStartButton();
 
-        // Panel dem Fenster hinzufuegen
+        //Panel dem Fenster hinzufuegen
         fenster.add(panel);
-        // focus ins fenster, dort ist der keyListener
+        //focus ins fenster, dort ist der keyListener
         fenster.setFocusable(true);
         fenster.requestFocus();
 
-        // fenster ein kleines bisschen vergroessern, fehler feld wird nicht angezeigt
+        //fenster ein kleines bisschen vergroessern, fehler feld wird nicht angezeigt
         this.fenster.resize((int)fenster.getSize().getWidth(), (int)fenster.getSize().getHeight()+1);
         this.fenster.resize((int)fenster.getSize().getWidth(), (int)fenster.getSize().getHeight()-1);
         fenster.getContentPane().setPreferredSize(new Dimension(fensterBreite,fensterHoehe));
 
-        // endlosschleife starten
+        //endlosschleife starten
         run();
     }
 
