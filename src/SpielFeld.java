@@ -76,8 +76,9 @@ public class SpielFeld {
      */
     private void EssenRandomPlazieren(){
         boolean posGefunden = false;
-        int x;
-        int y;
+        //platzhalter 0
+        int x = 0;
+        int y = 0;
         //Solange suchen bis freie Pos gefunden
         while(!posGefunden){
             Random ran = new Random();
@@ -85,11 +86,23 @@ public class SpielFeld {
             x = Math.abs(ran.nextInt()) % breite;
             //Zahl 0 <= y < hoehe
             y = Math.abs(ran.nextInt(hoehe)) % hoehe;
-            if(spielFeld[y][x] != 1){
-                posGefunden = true;
-                //diese zufaellige position mit essen(2) fuellen
+            boolean posBesetzt = false;
+            //alle position von Snake durchgehen
+            for(int i = 0; i < snakePos.size()-1; i++){
+                if(snakePos.get(i).getX() == y && snakePos.get(i).getY() == x){
+                    //diese Position ist schon von der Snake besetzt
+                    posBesetzt = true;
+                    //Schleife abbrechen, neue Pos suchen
+                    break;                 
+                }
+            }
+            if(posBesetzt == false){
+                //2 in das 2-Dim-Array(hier essen)
                 spielFeld[y][x] = 2;
+                //Position des Essens speichern
                 this.essenPos = new Position(y,x);
+                //true damit while schleife abbricht
+                posGefunden = true;
             }
         }
     }
