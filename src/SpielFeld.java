@@ -113,7 +113,7 @@ public class SpielFeld {
      * 
      * @return true wenn essen gegessen false sonst
      */
-    public boolean nextStep(){
+    public boolean nextStepIsApple(){
 
         //aktuelle position vom snake kopf
         int x = this.snakePos.get(snakePos.size()-1).getX();
@@ -149,6 +149,44 @@ public class SpielFeld {
             this.snakePos.remove(0);
             return false;
         }
+    }
+
+    /**
+     * berechnet ob die Snake sich selbst ist,
+     * int sich selbst hineinstoesst
+     * 
+     * @return true, wenn Snake trifft sich selbst
+     */
+    public boolean nextStepIsSnake(){
+        //Kopf Position wurde in nextStepIsApple berechnet
+        Position kopf = snakePos.get(snakePos.size()-1);
+        boolean kopfImKoerper = false;
+
+        for(int i = 0; i < snakePos.size()-1;i++){
+            //Wenn Kopf im Koerper ist
+            if(kopf.getX() == snakePos.get(i).getX() && kopf.getY() == snakePos.get(i).getY()){
+                kopfImKoerper = true;
+                //Schelife abbrechen
+                break;
+            }
+        }
+        return kopfImKoerper;
+    }
+
+    /**
+     * berechnet ob die Snake gegen eine Wand kommt
+     * 
+     * @return true wenn Snake kommt gegen Wand
+     */
+    public boolean nextStepIsWall(){
+        //Kopf Position wurde in nextStepIsApple berechnet
+        Position kopf = snakePos.get(snakePos.size()-1);
+        if(kopf.getX() > hoehe -1 || kopf.getY() > breite -1
+           || kopf.getX() < 0 || kopf.getY() < 0){
+               return true;
+           }else{
+               return false;
+           }
     }
 
     /**

@@ -44,7 +44,6 @@ public class Field extends Thread implements ComponentListener {
         //groesse des Fensters anwenden
         fenster.pack();
         
-
         //spielfeld erzeugen
         spielFeld = new SpielFeld(20, 20);
         //JPanel erzeugen
@@ -87,11 +86,24 @@ public class Field extends Thread implements ComponentListener {
                 // alles aktuallisieren
                 fenster.repaint();
                 // true wenn essen gegessen
-                if (this.spielFeld.nextStep()) {
+                if (this.spielFeld.nextStepIsApple()) {
                     // neue essenPos zeichnen
                     ((Panel) panel).setEatPos(spielFeld.getEssenPos());
                 }
-                // Thread pausieren
+                //true wenn Snake sich selbst isst
+                if(this.spielFeld.nextStepIsSnake()){
+                    //Stoppe das Spiel
+                    startStop();
+                    //TODO spiel neu starten
+                }
+                //true wenn snake gegegen Wand lauft
+                if(this.spielFeld.nextStepIsWall()){
+                    //stoppe dasS Spiel
+                    startStop();
+                    //TODO spiel neu starten
+                }
+
+                //Thread pausieren
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
